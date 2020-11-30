@@ -12,7 +12,8 @@ import AdminDashboard from "./Pages/AdminDashboard";
 
 // import dll
 import Navbar from "./Components/Navbar/Navbar";
-import PrivateRoute from './Components/PrivateRoot';
+import PrivateRoute from "./Components/PrivateRoot";
+import AdminRoute from "./Components/AdminRoot";
 import { GlobalContextProvider } from "./Context/GlobalContext";
 import "./Style.scss";
 
@@ -26,10 +27,18 @@ function App() {
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/product/:id" component={ProductDetailPage} />
             <PrivateRoute exact path="/cart" component={CartPage} />
-            <PrivateRoute exact path="/cart/shipping" component={ShippingPage} />
+            <PrivateRoute
+              exact
+              path="/cart/shipping"
+              component={ShippingPage}
+            />
             <PrivateRoute exact path="/profile" component={ProfilePage} />
-            <PrivateRoute exact path="/admin" component={AdminDashboard} />
-            <PrivateRoute exact path="/admin/add-product" component={AddProductPage} />
+            <AdminRoute exact path="/admin" component={AdminDashboard} />
+            <AdminRoute
+              exact
+              path="/admin/add-product"
+              component={AddProductPage}
+            />
           </Switch>
         </div>
       </Router>
