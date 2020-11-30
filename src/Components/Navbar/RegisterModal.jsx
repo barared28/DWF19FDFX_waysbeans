@@ -24,6 +24,9 @@ function RegisterModal({ show, setShow, switchModal, dispatch }) {
         },
       });
       setShow(false);
+      setEmail("");
+      setPass("");
+      setName("");
     } else {
       setShowPop(true);
     }

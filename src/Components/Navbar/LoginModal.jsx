@@ -24,6 +24,8 @@ function LoginModal({ show, setShow, switchModal, dispatch, state }) {
         ),
       });
       setShow(false);
+      setEmail("");
+      setPass("");
     } else {
       setShowPop(true);
     }
