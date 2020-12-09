@@ -6,8 +6,8 @@ import qrode from "../Images/qr-code.png";
 
 function ProfilePage() {
   const [state] = useContext(GlobalContext);
-  const { userLogin } = state;
-  const { transaction } = state;
+  const { user: userData } = state;
+  const transaction = [];
 
   return (
     <div className="space-between mt-77 mb-90">
@@ -19,10 +19,10 @@ function ProfilePage() {
           </div>
           <div className="ml-28">
             <h3 className="profile-page-sub-title">Full Name</h3>
-            <h4 className="profile-page-desc">{userLogin.name}</h4>
+            <h4 className="profile-page-desc">{userData.fullName}</h4>
 
             <h3 className="profile-page-sub-title mt-26">Email</h3>
-            <h4 className="profile-page-desc">{userLogin.email}</h4>
+            <h4 className="profile-page-desc">{userData.email}</h4>
           </div>
         </div>
       </div>

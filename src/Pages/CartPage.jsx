@@ -1,18 +1,19 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../Context/GlobalContext";
 import { Link } from "react-router-dom";
+import { baseURL, getProductByIdService } from "../services/httpServices";
 import format from "../config/formatingCurency";
 import trash from "../Images/trash.png";
 
 function CartPage() {
   const [state, dispatch] = useContext(GlobalContext);
   const { totalCart } = state;
-  const { ProductsCart } = state;
+  const { carts } = state;
   useEffect(() => {
     dispatch({
       type: "GET_TOTAL_CART",
     });
-  }, [state.ProductCard, dispatch]);
+  }, [dispatch]);
   return (
     <div className="mt-77">
       <h2 className="cart-page-title">My Cart</h2>
@@ -21,10 +22,10 @@ function CartPage() {
         <div className="cart-container-width">
           <div className="line w-100"></div>
           <div className="py-17">
-            {ProductsCart.length > 0 ? (
-              ProductsCart.map((product, index) => (
+            {carts.length > 0 ? (
+              carts.map((product, index) => (
                 <ProductCard
-                  product={product}
+                  dataProduct={product}
                   dispatch={dispatch}
                   key={index}
                 />
@@ -53,7 +54,7 @@ function CartPage() {
             <p className="cart-text half-bold">{format(+totalCart.total)}</p>
           </div>
           <div className="text-right mt-35">
-            {ProductsCart.length > 0 ? (
+            {carts.length > 0 ? (
               <Link to="/cart/shipping">
                 <button className="btn btn-primary">Proceed To Checkout</button>
               </Link>
@@ -69,46 +70,64 @@ function CartPage() {
   );
 }
 
-function ProductCard({ product, dispatch }) {
-  const onAdd = () => {
+function ProductCard({ dataProduct, dispatch }) {
+  const [product, setProducts] = useState(null);
+  useEffect(() => {
+    dataProduct &&
+      (async () => {
+        const data = await getProductByIdService(+dataProduct.id);
+        if (!data) {
+          return;
+        }
+        const product = data.data.data.product;
+        setProducts(product);
+      })();
+  }, [dataProduct]);
+  const saveCart = () => {
     dispatch({
-      type: "ADD_TO_CART",
-      payload: product,
+      type: "SAVE_CART",
     });
     dispatch({
       type: "GET_TOTAL_CART",
     });
+  };
+  const onAdd = () => {
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: dataProduct,
+    });
+    saveCart();
   };
   const onDesc = () => {
     if (product.qty > 1) {
       dispatch({
         type: "DESC_TO_CART",
-        payload: product,
+        payload: dataProduct,
       });
     } else {
       dispatch({
         type: "REMOVE_TO_CART",
-        payload: product,
+        payload: dataProduct,
       });
     }
-    dispatch({
-      type: "GET_TOTAL_CART",
-    });
+    saveCart();
   };
   const onRemove = () => {
     dispatch({
       type: "REMOVE_TO_CART",
-      payload: product,
+      payload: dataProduct,
     });
-    dispatch({
-      type: "GET_TOTAL_CART",
-    });
+    saveCart();
   };
-  return (
+  return product ? (
     <div className="space-between">
       <div className="row">
         <div>
-          <img src={product.photo} alt="contoh" className="cart-list-img" />
+          <img
+            src={`${baseURL}${product.photo}`}
+            alt="contoh"
+            className="cart-list-img"
+          />
         </div>
         <div className="ml-13">
           <h5 className="cart-title-name mt-11">{product.name}</h5>
@@ -117,7 +136,7 @@ function ProductCard({ product, dispatch }) {
               -
             </span>
             <div className="cart-qty-con align-center px-11">
-              <p className="cart-qty-num">{product.qty}</p>
+              <p className="cart-qty-num">{dataProduct.qty}</p>
             </div>
             <span className="cursor cart-btn" onClick={onAdd}>
               +
@@ -127,13 +146,15 @@ function ProductCard({ product, dispatch }) {
       </div>
       <div>
         <p className="cart-text mt-11">
-          {format(+product.price * +product.qty)}
+          {format(+product.price * +dataProduct.qty)}
         </p>
         <div className="text-right mt-17">
           <img src={trash} alt="remove" className="cursor" onClick={onRemove} />
         </div>
       </div>
     </div>
+  ) : (
+    <div>Loading</div>
   );
 }
 

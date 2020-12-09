@@ -1,34 +1,25 @@
 import { useState } from "react";
+import { loginService } from "../../services/httpServices";
 import Modal from "../Mikro/Modal";
 import Popup from "../Mikro/Popup";
 
 function LoginModal({ show, setShow, switchModal, dispatch, state }) {
   const [showPop, setShowPop] = useState(false);
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const onSwitch = () => {
     setShow(false);
     switchModal(true);
   };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const onLogin = (e) => {
     e.preventDefault();
-    if (
-      email &&
-      pass &&
-      state.user.find((user) => user.email === email && user.pass === pass)
-    ) {
-      dispatch({
-        type: "LOGIN",
-        payload: state.user.find(
-          (user) => user.email === email && user.pass === pass
-        ),
-      });
-      setShow(false);
-      setEmail("");
-      setPass("");
-    } else {
-      setShowPop(true);
-    }
+    loginService(
+      dispatch,
+      { email: formData.email, password: formData.password },
+      setShowPop
+    );
   };
   return (
     <Modal show={show} setShow={setShow}>
@@ -40,15 +31,15 @@ function LoginModal({ show, setShow, switchModal, dispatch, state }) {
               name="email"
               placeholder="Email"
               className="input w-100"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
+              onChange={(e) => handleChange(e)}
+              value={formData.email}
             />
             <input
               name="password"
               placeholder="Password"
               className="input w-100"
-              onChange={(e) => setPass(e.target.value)}
-              value={pass}
+              onChange={(e) => handleChange(e)}
+              value={formData.password}
             />
             <button
               className="btn btn-primary w-100 btn-modal mt-28"

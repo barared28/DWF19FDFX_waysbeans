@@ -6,7 +6,7 @@ import Modal from "../Components/Mikro/Modal";
 
 function Shipping() {
   const [state, dispatch] = useContext(GlobalContext);
-  const { ProductsCart } = state;
+  const { carts } = state;
   const [nameFile, setNameFile] = useState("Attache of transaction");
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState("");
@@ -21,7 +21,7 @@ function Shipping() {
     setShowModal(true);
     dispatch({
       type: "ADD_TO_TRANSACTION",
-      payload: ProductsCart,
+      payload: carts,
     });
     dispatch({
       type: "ADD_TO_TRANSACTION_ADMIN",
@@ -29,7 +29,7 @@ function Shipping() {
         name: name,
         address: address,
         postCode: postCode,
-        product: state.ProductsCart.map((product) => `${product.name},\n`),
+        product: state.carts.map((product) => `${product.name},\n`),
       },
     });
   };
@@ -93,9 +93,9 @@ function Shipping() {
         </div>
         <div className="shipping-width-right-con">
           <div>
-            {ProductsCart
-              ? ProductsCart.map((product, index) => (
-                  <CardProduct product={product} key={index} />
+            {carts
+              ? carts.map((product, index) => (
+                  <CardProduct dataProduct={product} key={index} />
                 ))
               : null}
           </div>

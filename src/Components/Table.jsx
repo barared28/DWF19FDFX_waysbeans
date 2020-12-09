@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 function Table({ data, dispatch }) {
   return (
     <table>
@@ -17,25 +19,35 @@ function Table({ data, dispatch }) {
           ? data.map((tran, index) => (
               <Td data={tran} index={index} dispatch={dispatch} key={index} />
             ))
-          : "Tidak ada Transaksi"}
+          : null}
       </tbody>
     </table>
   );
 }
 
 const Td = ({ data, index, dispatch }) => {
-  const onApprove = () => {
-    dispatch({
-      type: "ADMIN_APPROVE_TRANSC",
-      payload: { index: index },
-    });
+  const [products, setProducts] = useState({ id: [], name: "" });
+  const [status, setStatus] = useState(data.status);
+  const getProductName = () => {
+    if (data.products && data.products.length > 0) {
+      let productsName = "";
+      data.products.forEach((product) => {
+        if (product.name) {
+          if (!products.id.includes(product.id)) {
+            productsName += product.name + ", ";
+            setProducts({
+              id: [...products.id, product.id],
+            });
+          }
+        }
+      });
+      setProducts({ ...products, name: productsName });
+    }
   };
-  const onCancel = () => {
-    dispatch({
-      type: "ADMIN_CANCEL_TRANSC",
-      payload: { index: index },
-    });
-  };
+  useEffect(() => {
+    getProductName();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <tr>
@@ -43,29 +55,25 @@ const Td = ({ data, index, dispatch }) => {
         <td>{data.name}</td>
         <td>{data.address}</td>
         <td>{data.postCode}</td>
-        <td>{data.product}</td>
+        <td>{products.name}</td>
         <td>
-          {data.status === "succsess" ? (
+          {status === "succsess" ? (
             <p className="text-succsess">Succsess</p>
-          ) : data.status === "waiting" ? (
+          ) : status === "Waiting Approve" ? (
             <p className="text-waiting">Waiting Approve</p>
           ) : (
             <p className="text-cancel">Cancel</p>
           )}
         </td>
         <td>
-          {data.status === "succsess" ? (
+          {status === "succsess" ? (
             <div className="item-center">
               <i className="fas fa-check status-check"></i>
             </div>
-          ) : data.status === "waiting" ? (
+          ) : status === "Waiting Approve" ? (
             <div className="item-center">
-              <button className="action-cancel" onClick={onCancel}>
-                Cancel
-              </button>
-              <button className="action-succsess" onClick={onApprove}>
-                Approve
-              </button>
+              <button className="action-cancel cursor">Cancel</button>
+              <button className="action-succsess cursor">Approve</button>
             </div>
           ) : (
             <div className="item-center">

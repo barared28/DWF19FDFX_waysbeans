@@ -1,6 +1,7 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "../../Context/GlobalContext";
+import { logoutService } from "../../services/httpServices";
 import logo from "../../Images/Icon.png";
 import cart from "../../Images/cart.png";
 import user from "../../Images/user.png";
@@ -67,19 +68,17 @@ const NotLogin = ({ dispatch, state }) => {
 };
 
 const IsLogin = ({ dispatch, state }) => {
-  const { ProductsCart } = state;
+  const { carts } = state;
   const onLogout = (e) => {
     e.preventDefault();
-    dispatch({
-      type: "LOGOUT",
-    });
+    logoutService(dispatch);
   };
   return (
     <>
       <Link to="/cart">
-        {ProductsCart.length > 0 && (
+        {carts.length > 0 && (
           <div className="num-product-cart">
-            <p>{ProductsCart.length}</p>
+            <p>{carts.length}</p>
           </div>
         )}
         <img src={cart} alt="cart" className="mr-36 cursor" />
@@ -99,7 +98,7 @@ const IsLogin = ({ dispatch, state }) => {
               </div>
             </Link>
           </span>
-          {state.userLogin.admin ? (
+          {state.user.isAdmin ? (
             <>
               <span>
                 <Link to="/admin">

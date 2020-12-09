@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import format from "../../config/formatingCurency";
+import { baseURL } from "../../services/httpServices";
 
 function CardProduct({ product }) {
   return (
-    <Link to={`/product/${product.id}`}>
+    <Link to={`/product/${product.id}`} className="mb-20">
       <div className="card-image">
-        <img src={product.photo} />
+        <img src={`${baseURL}${product.photo}`} alt={product.id} />
       </div>
       <div className="card-body">
         <div className="pl-16 py-14">
