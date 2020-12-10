@@ -1,37 +1,56 @@
 import { useContext, useState } from "react";
 import { GlobalContext } from "../Context/GlobalContext";
 import { useHistory } from "react-router-dom";
+import { addTransactionService } from "../services/httpServices";
 import CardProduct from "../Components/ProductBox";
 import Modal from "../Components/Mikro/Modal";
 
 function Shipping() {
-  const [state, dispatch] = useContext(GlobalContext);
+  const [state] = useContext(GlobalContext);
   const { carts } = state;
-  const [nameFile, setNameFile] = useState("Attache of transaction");
   const [showModal, setShowModal] = useState(false);
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [postCode, setPostCode] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    address: "",
+    postCode: "",
+    phone: "",
+    email: "",
+    attachment: { name: "Attache of transaction" },
+  });
   const router = useHistory();
-  const onUpload = (e) => {
-    setNameFile(e.target.files[0].name);
+  const handleChange = (e) => {
+    const key = e.target.name;
+    const value = e.target.type === "file" ? e.target.files[0] : e.target.value;
+    setFormData({ ...formData, [key]: value });
+    console.log(formData);
   };
   const onPay = (e) => {
     e.preventDefault();
-    setShowModal(true);
-    dispatch({
-      type: "ADD_TO_TRANSACTION",
-      payload: carts,
-    });
-    dispatch({
-      type: "ADD_TO_TRANSACTION_ADMIN",
-      payload: {
-        name: name,
-        address: address,
-        postCode: postCode,
-        product: state.carts.map((product) => `${product.name},\n`),
-      },
-    });
+    if (
+      formData.name &&
+      formData.address &&
+      formData.postCode &&
+      formData.phone &&
+      formData.email &&
+      formData.attachment
+    ) {
+      const products = JSON.stringify(
+        carts.map((product) => {
+          return { id: product.id, orderQuantity: product.qty };
+        })
+      );
+      console.log(products);
+      const { name, address, postCode, phone, email, attachment } = formData;
+      const body = new FormData();
+      body.append("name", name);
+      body.append("address", address);
+      body.append("postCode", postCode);
+      body.append("phone", phone);
+      body.append("email", email);
+      body.append("attachment", attachment);
+      body.append("products", products);
+      addTransactionService(body, () => setShowModal(true));
+    }
   };
   const redirect = () => {
     router.push("/profile");
@@ -46,47 +65,52 @@ function Shipping() {
               name="name"
               placeholder="Name"
               className="input"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.name}
+              onChange={(e) => handleChange(e)}
             />
             <input
               name="email"
               placeholder="Email"
               type="email"
               className="input"
+              value={formData.email}
+              onChange={(e) => handleChange(e)}
             />
             <input
               name="phone"
               placeholder="Phone"
               type="number"
               className="input"
+              value={formData.phone}
+              onChange={(e) => handleChange(e)}
             />
             <input
-              name="possCode"
-              placeholder="Poss Code"
+              name="postCode"
+              placeholder="Post Code"
               type="number"
               className="input"
-              value={postCode}
-              onChange={(e) => setPostCode(e.target.value)}
+              value={formData.postCode}
+              onChange={(e) => handleChange(e)}
             />
             <textarea
               name="address"
               placeholder="Address"
               rows={4}
               className="input"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              value={formData.address}
+              onChange={(e) => handleChange(e)}
             />
             <label htmlFor="file" className="cursor input">
               <div className="space-between align-center">
-                <p>{nameFile}</p>
+                <p>{formData.attachment.name}</p>
                 <i className="fas fa-paperclip"></i>
               </div>
               <input
                 type="file"
+                name="attachment"
                 className="none"
                 id="file"
-                onChange={onUpload}
+                onChange={(e) => handleChange(e)}
               />
             </label>
           </div>
@@ -100,14 +124,12 @@ function Shipping() {
               : null}
           </div>
           <div className="mt-28">
-            {/* <Link to="/profile"> */}
             <button
               className="btn btn-primary shipping-width-right-con"
               onClick={onPay}
             >
               Pay
             </button>
-            {/* </Link> */}
           </div>
         </div>
       </form>

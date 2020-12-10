@@ -1,5 +1,6 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../Context/GlobalContext";
+import { getMyTransactions } from "../services/httpServices";
 import user from "../Images/user.png";
 import CardProduct from "../Components/ProductBox";
 import qrode from "../Images/qr-code.png";
@@ -7,7 +8,10 @@ import qrode from "../Images/qr-code.png";
 function ProfilePage() {
   const [state] = useContext(GlobalContext);
   const { user: userData } = state;
-  const transaction = [];
+  const [transactions, setTransactions] = useState([]);
+  useEffect(() => {
+    getMyTransactions(setTransactions);
+  }, []);
 
   return (
     <div className="space-between mt-77 mb-90">
@@ -29,17 +33,30 @@ function ProfilePage() {
       <div className="profile-page-width-con-right">
         <h2 className="profile-page-title">My Transaction</h2>
         <div className="mt-26">
-          {transaction.length > 0
-            ? transaction.map((product, index) => {
-                return (
-                  <CardProduct product={product} key={index}>
-                    <Status />
-                  </CardProduct>
-                );
+          {transactions.length > 0
+            ? transactions.map((transaction, index) => {
+                return <Transaction transaction={transaction} key={index} />;
               })
             : null}
         </div>
       </div>
+    </div>
+  );
+}
+
+function Transaction({ transaction }) {
+  console.log(transaction);
+  return (
+    <div>
+      {transaction.products.length > 0 &&
+        transaction.products.map((product, index) => {
+          console.log(product);
+          return (
+            <CardProduct dataProduct={product} key={index} ready={true}>
+              <Status type={transaction.status} />
+            </CardProduct>
+          );
+        })}
     </div>
   );
 }

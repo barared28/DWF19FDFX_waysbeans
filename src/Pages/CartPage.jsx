@@ -99,7 +99,7 @@ function ProductCard({ dataProduct, dispatch }) {
     saveCart();
   };
   const onDesc = () => {
-    if (product.qty > 1) {
+    if (dataProduct.qty > 1) {
       dispatch({
         type: "DESC_TO_CART",
         payload: dataProduct,

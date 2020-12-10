@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { editStatusTransactionService } from "../services/httpServices";
 
 function Table({ data, dispatch }) {
   return (
@@ -48,6 +49,10 @@ const Td = ({ data, index, dispatch }) => {
     getProductName();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const onAction = (status) => {
+    editStatusTransactionService(data.id, { status });
+    setStatus(status);
+  };
   return (
     <>
       <tr>
@@ -57,23 +62,35 @@ const Td = ({ data, index, dispatch }) => {
         <td>{data.postCode}</td>
         <td>{products.name}</td>
         <td>
-          {status === "succsess" ? (
+          {status === "Success" ? (
             <p className="text-succsess">Succsess</p>
           ) : status === "Waiting Approve" ? (
             <p className="text-waiting">Waiting Approve</p>
+          ) : status === "On The Way" ? (
+            <p className="text-on-the-way">On The Way</p>
           ) : (
             <p className="text-cancel">Cancel</p>
           )}
         </td>
         <td>
-          {status === "succsess" ? (
+          {status === "Success" || status === "On The Way" ? (
             <div className="item-center">
               <i className="fas fa-check status-check"></i>
             </div>
           ) : status === "Waiting Approve" ? (
             <div className="item-center">
-              <button className="action-cancel cursor">Cancel</button>
-              <button className="action-succsess cursor">Approve</button>
+              <button
+                className="action-cancel cursor"
+                onClick={() => onAction("Cancel")}
+              >
+                Cancel
+              </button>
+              <button
+                className="action-succsess cursor"
+                onClick={() => onAction("On The Way")}
+              >
+                Approve
+              </button>
             </div>
           ) : (
             <div className="item-center">

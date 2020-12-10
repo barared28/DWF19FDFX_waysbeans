@@ -103,3 +103,26 @@ export const getTransactionsService = async (cbSuccess) => {
     console.log(error);
   }
 };
+
+export const editStatusTransactionService = (id, status) => {
+  API.patch(`transaction/${id}`, status)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+};
+
+export const addTransactionService = (data, cbSuccess) => {
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
+  API.post("/transaction", data, config)
+    .then(() => cbSuccess())
+    .catch((err) => console.log(err));
+};
+
+export const getMyTransactions = (setTransactions) => {
+  API.get("/my-transactions")
+    .then((res) => setTransactions(res.data.data.transactions))
+    .catch((err) => console.log(err));
+};
