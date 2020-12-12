@@ -37,6 +37,7 @@ function RegisterModal({ show, setShow, switchModal, dispatch }) {
             <input
               name="password"
               placeholder="Password"
+              type="password"
               className="input w-100"
               onChange={(e) => handleChange(e)}
               value={formData.password}

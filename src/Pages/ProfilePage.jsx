@@ -57,6 +57,7 @@ function Transaction({ transaction }) {
             </CardProduct>
           );
         })}
+      <div className="mb-10 line"></div>
     </div>
   );
 }

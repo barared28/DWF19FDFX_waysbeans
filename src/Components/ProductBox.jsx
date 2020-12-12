@@ -17,7 +17,7 @@ function ProductBox({ children, dataProduct, ready = false }) {
     }
   }, [dataProduct, ready]);
   return product ? (
-    <div className="space-between bg-back shipping-card-con mb-10">
+    <div className="space-between bg-back shipping-card-con">
       <div className="row">
         <div className="align-center">
           <img

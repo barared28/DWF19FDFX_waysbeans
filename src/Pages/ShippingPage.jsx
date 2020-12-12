@@ -6,7 +6,7 @@ import CardProduct from "../Components/ProductBox";
 import Modal from "../Components/Mikro/Modal";
 
 function Shipping() {
-  const [state] = useContext(GlobalContext);
+  const [state, dispatch] = useContext(GlobalContext);
   const { carts } = state;
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -53,6 +53,9 @@ function Shipping() {
     }
   };
   const redirect = () => {
+    dispatch({
+      type: "RESET_CART",
+    });
     router.push("/profile");
   };
   return (
@@ -119,7 +122,9 @@ function Shipping() {
           <div>
             {carts
               ? carts.map((product, index) => (
-                  <CardProduct dataProduct={product} key={index} />
+                  <div className="mb-10">
+                    <CardProduct dataProduct={product} key={index} />
+                  </div>
                 ))
               : null}
           </div>
