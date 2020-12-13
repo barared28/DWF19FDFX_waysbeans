@@ -10,9 +10,11 @@ import ProductDetailPage from "./Pages/ProductDetailPage";
 import ProfilePage from "./Pages/ProfilePage";
 import ShippingPage from "./Pages/ShippingPage";
 import AdminDashboard from "./Pages/AdminDashboard";
+import NotFound from "./Pages/NotFoundPage";
 
 // import dll
 import Navbar from "./Components/Navbar/Navbar";
+import Loader from "./Components/Loader";
 import PrivateRoute from "./Components/PrivateRoot";
 import AdminRoute from "./Components/AdminRoot";
 import { GlobalContext } from "./Context/GlobalContext";
@@ -35,7 +37,9 @@ function App() {
   return (
     <Router>
       {loading ? (
-        <div>Loading</div>
+        <div className="w-100 h-100 item-center align-center">
+          <Loader />
+        </div>
       ) : (
         <>
           <Navbar />
@@ -56,6 +60,7 @@ function App() {
                 path="/admin/add-product"
                 component={AddProductPage}
               />
+              <Route component={NotFound} />
             </Switch>
           </div>
         </>

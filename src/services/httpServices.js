@@ -3,7 +3,7 @@ import { API, setAuthToken } from "../config/httpAxios";
 // for image and static file
 export const baseURL = "http://localhost:5000/";
 
-export const loginService = async (dispatch, body, cbFailed) => {
+export const loginService = async (dispatch, body, cbFailed, cbSuccess) => {
   try {
     const response = await API.post("/login", body);
     setAuthToken(response.data.data.token);
@@ -13,6 +13,7 @@ export const loginService = async (dispatch, body, cbFailed) => {
       type: "LOGIN",
       payload: { ...getProfile.data.data },
     });
+    cbSuccess(false);
   } catch (error) {
     console.log(error);
     cbFailed(true);
@@ -94,13 +95,15 @@ export const addProductService = (data, cb) => {
     .catch((error) => console.error(error));
 };
 
-export const getTransactionsService = async (cbSuccess) => {
+export const getTransactionsService = async (cbSuccess, setLoading) => {
   try {
     const transactions = await API.get("/transactions");
     console.log(transactions.data.data.transactions);
     cbSuccess(transactions.data.data.transactions);
+    setLoading(false);
   } catch (error) {
     console.log(error);
+    setLoading(false);
   }
 };
 
@@ -121,8 +124,14 @@ export const addTransactionService = (data, cbSuccess) => {
     .catch((err) => console.log(err));
 };
 
-export const getMyTransactions = (setTransactions) => {
+export const getMyTransactions = (setTransactions, setLoading) => {
   API.get("/my-transactions")
-    .then((res) => setTransactions(res.data.data.transactions))
-    .catch((err) => console.log(err));
+    .then((res) => {
+      setTransactions(res.data.data.transactions);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
 };

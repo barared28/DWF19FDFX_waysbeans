@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { addProductService } from "../services/httpServices";
 import Modal from "../Components/Mikro/Modal";
-import example from "../Images/Product1.png";
 
 function AddProduct() {
   const [nameFile, setNameFile] = useState("Photo Product");
@@ -10,13 +9,19 @@ function AddProduct() {
   const [showModal, setShowModal] = useState(false);
   const router = useHistory();
   const onUpload = (e) => {
-    setNameFile(e.target.files[0].name);
+    if (e.target.files[0]) {
+      setNameFile(e.target.files[0].name);
+    } else {
+      setNameFile("Photo Product");
+    }
   };
   const handleChange = (e) => {
-    const key = e.target.name;
-    const value = e.target.type === "file" ? e.target.files[0] : e.target.value;
-    setFormData({ ...formData, [key]: value });
-    console.log(formData);
+    if (e.target) {
+      const key = e.target.name;
+      const value =
+        e.target.type === "file" ? e.target.files[0] : e.target.value;
+      setFormData({ ...formData, [key]: value });
+    }
   };
   const handleButton = (e) => {
     e.preventDefault();
@@ -98,8 +103,18 @@ function AddProduct() {
           </div>
         </form>
       </div>
-      <div className="ml-92">
-        <img src={example} alt="add-product" className="add-product-img" />
+      <div className="ml-92 align-center">
+        {formData && formData.photo ? (
+          <img
+            src={URL.createObjectURL(formData.photo)}
+            alt="add-product"
+            className="add-product-img"
+          />
+        ) : (
+          <div className="add-product-img-container align-center">
+            <h1 className="">PREVIEW</h1>
+          </div>
+        )}
       </div>
       <Modal show={showModal} setShow={setShowModal} custom={redirect}>
         <div className="p-modal">

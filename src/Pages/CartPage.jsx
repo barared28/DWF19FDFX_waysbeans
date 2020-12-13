@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../Context/GlobalContext";
 import { Link } from "react-router-dom";
 import { baseURL, getProductByIdService } from "../services/httpServices";
+import Loader from "../Components/Loader";
 import format from "../config/formatingCurency";
 import trash from "../Images/trash.png";
 
@@ -54,7 +55,7 @@ function CartPage() {
             <p className="cart-text half-bold">{format(+totalCart.total)}</p>
           </div>
           <div className="text-right mt-35">
-            {carts.length > 0 ? (
+            {carts.length > 0 && !state.user.isAdmin ? (
               <Link to="/cart/shipping">
                 <button className="btn btn-primary">Proceed To Checkout</button>
               </Link>
@@ -154,7 +155,9 @@ function ProductCard({ dataProduct, dispatch }) {
       </div>
     </div>
   ) : (
-    <div>Loading</div>
+    <div className="item-center">
+      <Loader />
+    </div>
   );
 }
 

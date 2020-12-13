@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "../../Context/GlobalContext";
 import { logoutService } from "../../services/httpServices";
@@ -86,18 +86,20 @@ const IsLogin = ({ dispatch, state }) => {
       <div className="dropdown">
         <img src={user} alt="user" className="user-icon dropbtn"></img>
         <div className="dropdown-content">
-          <span>
-            <Link to="/profile">
-              <div className="row align-center">
-                <img
-                  src={userIcon}
-                  alt="profile-icon"
-                  className="dropdown-img-icon"
-                />
-                <p className="ml-19 dropdown-text">Profile</p>
-              </div>
-            </Link>
-          </span>
+          {!state.user.isAdmin && (
+            <span>
+              <Link to="/profile">
+                <div className="row align-center">
+                  <img
+                    src={userIcon}
+                    alt="profile-icon"
+                    className="dropdown-img-icon"
+                  />
+                  <p className="ml-19 dropdown-text">Profile</p>
+                </div>
+              </Link>
+            </span>
+          )}
           {state.user.isAdmin ? (
             <>
               <span>

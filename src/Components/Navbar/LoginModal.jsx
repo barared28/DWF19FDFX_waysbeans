@@ -18,7 +18,8 @@ function LoginModal({ show, setShow, switchModal, dispatch, state }) {
     loginService(
       dispatch,
       { email: formData.email, password: formData.password },
-      setShowPop
+      setShowPop,
+      setShow
     );
   };
   return (

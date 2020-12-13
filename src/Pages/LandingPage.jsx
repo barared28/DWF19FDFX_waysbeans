@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getProductsService } from "../services/httpServices";
 import Hero from "../Components/LandingPage/Hero";
 import CardProduct from "../Components/LandingPage/CardProduct";
-// import products from "../data/products.json";
+import Loader from "../Components/Loader";
 
 function LandingPage() {
   const [loading, setLoading] = useState(false);
@@ -22,15 +22,18 @@ function LandingPage() {
   return (
     <div>
       <Hero />
-      <div className="mt-50 mb-51 grid-container">
-        {loading ? (
-          <div>Loading</div>
-        ) : (
-          products.map((product, index) => {
+      {loading && (
+        <div className="mt-50 w-100 item-center">
+          <Loader />
+        </div>
+      )}
+      {products.length > 0 && (
+        <div className="mt-50 mb-51 grid-container">
+          {products.map((product, index) => {
             return <CardProduct product={product} key={index} />;
-          })
-        )}
-      </div>
+          })}
+        </div>
+      )}
     </div>
   );
 }
