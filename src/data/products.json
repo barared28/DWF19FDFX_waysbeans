@@ -1,0 +1,34 @@
+[
+    {
+        "id": "1",
+        "name": "RWANDA Beans",
+        "price": "299900",
+        "stock": "200",
+        "photo": "/image/product1.png",
+        "detail": "Teasia's Rwandan coffee is another single-origin, sustainably sourced, 100% Arabica offering. These beans are grown by Lake Kivu around 5,000 to 6,000 feet above sea level. The beans are wet-processed and medium-dark roasted at an artisanal roaster. The brew has a rich, deep finish with clean bright flavors.Teasia's Rwandan coffee is another single-origin, sustainably sourced."
+    },
+    {
+        "id": "2",
+        "name": "ETHIOPIA Beans",
+        "price": "109900",
+        "stock": "99",
+        "photo": "/image/product2.png",
+        "detail": "Coffee production in Ethiopia is a longstanding tradition which dates back dozens of centuries. Ethiopia is where Coffea arabica, the coffee plant, originates. The plant is now grown in various parts of the world; Ethiopia itself accounts for around 3% of the global coffee market. Coffee is important to the economy of Ethiopia Coffee production in Ethiopia is a longstanding tradition which dates back dozens of centuries."
+    },
+    {
+        "id": "3",
+        "name": "GUETEMALA Beans",
+        "price": "300900",
+        "stock": "500",
+        "photo": "/image/product3.png",
+        "detail": "Hampir semua referensi sepakat mengatakan bahwa kopi pertama kali ditemukan di Ethiopia, meskipun ada juga beberapa protes yang menyatakan bahwa Coffea arabica sebenarnya muncul pertama kali di bagian selatan Sudan. Karena para gembala Ethiopia adalah manusia pertama yang mengonsumsi kopi—walau saat itu mereka baru mengonsumsi buah/cherry-nya saja, maka gagasan tentang “Ethiopia sebagai tempat asal kopi” pun semakin kuat."
+    },
+    {
+        "id": "4",
+        "name": "NICARAGUA Beans",
+        "price": "250900",
+        "stock": "352",
+        "photo": "/image/product4.png",
+        "detail": "Nicaragua coffee bean flavors vary greatly. Most of the beans grown in Nicaragua have a common flavor of smooth and medium body with bright mild acidity that is coupled by fruity, well defined snap and crispy flavor. The beans also have a wine like taste. Nicaragua coffee bean flavors vary greatly. Most of the beans grown in Nicaragua have a common flavor of smooth and medium body with bright mild acidity that is coupled by fruity."
+    }
+]
