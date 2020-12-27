@@ -11,6 +11,7 @@ const productSchema = Yup.object().shape({
   price: Yup.number().min(10000, "Too Cheap !!").required("Price Required"),
   description: Yup.string()
     .min(10, "Too Short !!")
+    .max(255, "Too Long !!")
     .required("Description Required"),
   stock: Yup.number().min(10, "Too Low !!").required("Stock Required"),
 });
@@ -32,8 +33,8 @@ function AddProduct() {
     if (image === null || !image) {
       return alert("Photo is Required");
     }
-    const body = new FormData();
     setLoading(true);
+    const body = new FormData();
     body.append("name", result.name);
     body.append("description", result.description);
     body.append("price", result.price);
