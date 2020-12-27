@@ -17,6 +17,7 @@ function Popup({
 
   useEffect(() => {
     timeOut();
+    // eslint-disable-next-line
   }, []);
 
   return (

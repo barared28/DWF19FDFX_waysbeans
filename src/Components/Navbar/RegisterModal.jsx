@@ -13,7 +13,7 @@ const registerSchema = Yup.object().shape({
 
 function RegisterModal({ show, setShow, switchModal, dispatch }) {
   const [showPop, setShowPop] = useState(false);
-  const [showPopText, setPopText] = useState("Email Already Used");
+  const [showPopText] = useState("Email Already Used");
   const onSwitch = () => {
     setShow(false);
     switchModal(true);
@@ -94,42 +94,3 @@ function RegisterModal({ show, setShow, switchModal, dispatch }) {
 }
 
 export default RegisterModal;
-
-{
-  /* <form className="">
-            <input
-              name="email"
-              placeholder="Email"
-              className="input w-100"
-              onChange={(e) => handleChange(e)}
-              value={formData.email}
-            />
-            <input
-              name="password"
-              placeholder="Password"
-              type="password"
-              className="input w-100"
-              onChange={(e) => handleChange(e)}
-              value={formData.password}
-            />
-            <input
-              name="fullName"
-              placeholder="Full Name"
-              className="input w-100"
-              onChange={(e) => handleChange(e)}
-              value={formData.fullName}
-            />
-            <button
-              className="btn btn-primary w-100 btn-modal mt-8"
-              onClick={onRegister}
-            >
-              Register
-            </button>
-            <p className="text-center text-modal mt-21">
-              Already have an account ?{" "}
-              <span className="half-bold cursor" onClick={onSwitch}>
-                Klik Here
-              </span>
-            </p>
-          </form> */
-}

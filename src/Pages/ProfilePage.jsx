@@ -18,7 +18,8 @@ function ProfilePage() {
   useEffect(() => {
     setLoading(true);
     getMyTransactions(setTransactions, setLoading);
-    checkUser()
+    checkUser();
+    // eslint-disable-next-line
   }, []);
   const checkUser = () => {
     if (!userData.fullName) {

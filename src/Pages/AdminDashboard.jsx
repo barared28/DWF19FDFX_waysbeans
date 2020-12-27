@@ -5,6 +5,7 @@ import Table from "../Components/Table/Table";
 import Loader from "../Components/Load/Loader";
 
 function AdminDashboard() {
+  // eslint-disable-next-line
   const [state, dispatch] = useContext(GlobalContext);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);

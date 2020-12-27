@@ -17,7 +17,7 @@ function Hero() {
       </div>
       <div>
         <div className='wave-hero'></div>
-        <img src={image} className="hero-image mt-28" />
+        <img src={image} className="hero-image mt-28" alt="hero-waysbeans" />
       </div>
     </div>
   );
