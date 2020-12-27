@@ -18,7 +18,7 @@ import Loader from "./Components/Load/Loader";
 import PrivateRoute from "./Components/Rooter/PrivateRoot";
 import AdminRoute from "./Components/Rooter/AdminRoot";
 import { GlobalContext } from "./Context/GlobalContext";
-import { loadedService } from "./Services/httpServices";
+import { loadedService } from "./services/httpServices";
 import "./Style.scss";
 
 function App() {
