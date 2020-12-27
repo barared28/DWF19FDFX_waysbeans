@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../Context/GlobalContext";
 import { useParams } from "react-router-dom";
-import { getProductByIdService, baseURL } from "../services/httpServices";
+import { getProductByIdService } from "../services/httpServices";
 import PageNotFound from "../Pages/NotFoundPage";
 import LoginModal from "../Components/Navbar/LoginModal";
 import RegisterModal from "../Components/Navbar/RegisterModal";

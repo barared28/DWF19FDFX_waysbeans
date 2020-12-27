@@ -1,13 +1,24 @@
 import { useEffect } from "react";
 
-function Popup({ text, type = "succsess", show = false, setShow, time = 3000 }) {
-  useEffect(() => {
+function Popup({
+  text,
+  type = "succsess",
+  show = false,
+  setShow,
+  time = 3000,
+}) {
+  const timeOut = () => {
     if (show === true) {
       setTimeout(() => {
         setShow(false);
       }, time);
     }
-  }, [show]);
+  };
+
+  useEffect(() => {
+    timeOut();
+  }, []);
+
   return (
     <div className={show ? "pop-up-container" : "none"}>
       <div className="item-center ">

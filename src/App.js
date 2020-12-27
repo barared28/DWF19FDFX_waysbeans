@@ -22,6 +22,7 @@ import { loadedService } from "./services/httpServices";
 import "./Style.scss";
 
 function App() {
+  // eslint-disable-next-line
   const [state, dispatch] = useContext(GlobalContext);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
