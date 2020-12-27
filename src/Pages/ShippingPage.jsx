@@ -5,6 +5,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { addTransactionService } from "../Services/httpServices";
 import CardProduct from "../Components/Mikro/ProductBox";
+import UploadLoader from "../Components/Load/UploadLoader";
 import Modal from "../Components/Mikro/Modal";
 
 const transactionSchema = Yup.object().shape({
@@ -20,6 +21,7 @@ function Shipping() {
   const { carts } = state;
   const [showModal, setShowModal] = useState(false);
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const router = useHistory();
 
   const onPay = (result) => {
@@ -31,26 +33,31 @@ function Shipping() {
         return { id: product.id, orderQuantity: product.qty };
       })
     );
+    setLoading(true);
     const body = new FormData();
     body.append("name", result.name);
     body.append("address", result.address);
     body.append("postCode", result.postCode);
     body.append("phone", result.phone);
     body.append("email", result.email);
-    body.append("attachment", image);
+    body.append("image", image);
     body.append("products", products);
-    addTransactionService(body, () => setShowModal(true));
+    addTransactionService(body, () => {
+      dispatch({
+        type: "RESET_CART",
+      });
+      setLoading(true);
+      setShowModal(true);
+    });
   };
 
   const redirect = () => {
-    dispatch({
-      type: "RESET_CART",
-    });
     router.push("/profile");
   };
 
   return (
     <>
+      {loading && <UploadLoader />}
       <Formik
         initialValues={{
           name: "",

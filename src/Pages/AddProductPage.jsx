@@ -4,6 +4,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { addProductService } from "../Services/httpServices";
 import Modal from "../Components/Mikro/Modal";
+import UploadLoader from "../Components/Load/UploadLoader";
 
 const productSchema = Yup.object().shape({
   name: Yup.string().min(4, "Too Short !!").required("Name Required"),
@@ -18,6 +19,7 @@ function AddProduct() {
   const [nameFile, setNameFile] = useState("Photo Product");
   const [image, setImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useHistory();
   const onUpload = (e) => {
     if (e.target.files[0]) {
@@ -31,18 +33,23 @@ function AddProduct() {
       return alert("Photo is Required");
     }
     const body = new FormData();
+    setLoading(true);
     body.append("name", result.name);
     body.append("description", result.description);
     body.append("price", result.price);
     body.append("stock", result.stock);
-    body.append("photo", image);
-    addProductService(body, () => setShowModal(true));
+    body.append("image", image);
+    addProductService(body, () => {
+      setLoading(false);
+      setShowModal(true);
+    });
   };
   const redirect = () => {
     router.push("/");
   };
   return (
     <div className="row mb-90 mt-44">
+      {loading && <UploadLoader />}
       <div className="w-472 mt-33">
         <h2 className="add-product-page-title mb-20">Add Product</h2>
         <Formik

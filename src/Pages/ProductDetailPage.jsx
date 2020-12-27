@@ -55,7 +55,7 @@ function ProductDetailPage() {
         <div className="row mt-92 mb-51">
           <div className="align-center">
             <img
-              src={`${baseURL}${product.photo}`}
+              src={product.photo}
               alt={product.id}
               className="product-image"
             />

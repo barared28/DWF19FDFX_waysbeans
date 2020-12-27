@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../Context/GlobalContext";
 import { Link } from "react-router-dom";
-import { baseURL, getProductByIdService } from "../Services/httpServices";
+import { getProductByIdService } from "../Services/httpServices";
 import Loader from "../Components/Load/Loader";
 import format from "../Config/formatingCurency";
 import trash from "../Images/trash.png";
@@ -125,7 +125,7 @@ function ProductCard({ dataProduct, dispatch }) {
       <div className="row">
         <div>
           <img
-            src={`${baseURL}${product.photo}`}
+            src={product.photo}
             alt="contoh"
             className="cart-list-img"
           />

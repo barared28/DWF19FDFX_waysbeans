@@ -1,8 +1,5 @@
 import { API, setAuthToken } from "../Config/httpAxios";
 
-// for image and static file
-export const baseURL = "http://localhost:5000/";
-
 export const loginService = async (dispatch, body, cbFailed, cbSuccess) => {
   try {
     const response = await API.post("/login", body);

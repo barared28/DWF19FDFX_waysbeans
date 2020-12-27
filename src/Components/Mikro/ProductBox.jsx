@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import format from "../../Config/formatingCurency";
 import logo from "../../Images/Icon.png";
-import { getProductByIdService, baseURL } from "../../Services/httpServices";
+import { getProductByIdService } from "../../Services/httpServices";
 
 function ProductBox({ children, dataProduct, ready = false }) {
   const [product, setProducts] = useState(null);
@@ -21,7 +21,7 @@ function ProductBox({ children, dataProduct, ready = false }) {
       <div className="row">
         <div className="align-center">
           <img
-            src={`${baseURL}${product.photo}`}
+            src={product.photo}
             className="shipping-card-img"
             alt={product.name}
           />
