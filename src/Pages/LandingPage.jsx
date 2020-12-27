@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { getProductsService } from "../services/httpServices";
+import { getProductsService } from "../Services/httpServices";
 import Hero from "../Components/LandingPage/Hero";
 import CardProduct from "../Components/LandingPage/CardProduct";
-import Loader from "../Components/Loader";
+import Loader from "../Components/Load/Loader";
 
 function LandingPage() {
   const [loading, setLoading] = useState(false);

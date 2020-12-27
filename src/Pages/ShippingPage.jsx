@@ -1,143 +1,154 @@
 import { useContext, useState } from "react";
 import { GlobalContext } from "../Context/GlobalContext";
 import { useHistory } from "react-router-dom";
-import { addTransactionService } from "../services/httpServices";
-import CardProduct from "../Components/ProductBox";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { addTransactionService } from "../Services/httpServices";
+import CardProduct from "../Components/Mikro/ProductBox";
 import Modal from "../Components/Mikro/Modal";
+
+const transactionSchema = Yup.object().shape({
+  name: Yup.string().min(4, "Too Short !!").required("Name Required"),
+  address: Yup.string().min(8, "Too Short !!").required("Address Required"),
+  postCode: Yup.number().min(4, "Too Short !!").required("Post Code Required"),
+  phone: Yup.number().min(10, "Too Short !!").required("Phone Required"),
+  email: Yup.string().email("Invalid Email").required("Email Required"),
+});
 
 function Shipping() {
   const [state, dispatch] = useContext(GlobalContext);
   const { carts } = state;
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    address: "",
-    postCode: "",
-    phone: "",
-    email: "",
-    attachment: { name: "Attache of transaction" },
-  });
+  const [image, setImage] = useState(null);
   const router = useHistory();
-  const handleChange = (e) => {
-    const key = e.target.name;
-    const value = e.target.type === "file" ? e.target.files[0] : e.target.value;
-    setFormData({ ...formData, [key]: value });
-    console.log(formData);
-  };
-  const onPay = (e) => {
-    e.preventDefault();
-    if (
-      formData.name &&
-      formData.address &&
-      formData.postCode &&
-      formData.phone &&
-      formData.email &&
-      formData.attachment
-    ) {
-      const products = JSON.stringify(
-        carts.map((product) => {
-          return { id: product.id, orderQuantity: product.qty };
-        })
-      );
-      console.log(products);
-      const { name, address, postCode, phone, email, attachment } = formData;
-      const body = new FormData();
-      body.append("name", name);
-      body.append("address", address);
-      body.append("postCode", postCode);
-      body.append("phone", phone);
-      body.append("email", email);
-      body.append("attachment", attachment);
-      body.append("products", products);
-      addTransactionService(body, () => setShowModal(true));
+
+  const onPay = (result) => {
+    if (!image || image === null) {
+      return alert("Attachment is Required");
     }
+    const products = JSON.stringify(
+      carts.map((product) => {
+        return { id: product.id, orderQuantity: product.qty };
+      })
+    );
+    const body = new FormData();
+    body.append("name", result.name);
+    body.append("address", result.address);
+    body.append("postCode", result.postCode);
+    body.append("phone", result.phone);
+    body.append("email", result.email);
+    body.append("attachment", image);
+    body.append("products", products);
+    addTransactionService(body, () => setShowModal(true));
   };
+
   const redirect = () => {
     dispatch({
       type: "RESET_CART",
     });
     router.push("/profile");
   };
+
   return (
     <>
-      <form className="space-between mb-51 mt-77">
-        <div>
-          <h2 className="shipping-page-title">Shipping</h2>
-          <div className="column">
-            <input
-              name="name"
-              placeholder="Name"
-              className="input"
-              value={formData.name}
-              onChange={(e) => handleChange(e)}
-            />
-            <input
-              name="email"
-              placeholder="Email"
-              type="email"
-              className="input"
-              value={formData.email}
-              onChange={(e) => handleChange(e)}
-            />
-            <input
-              name="phone"
-              placeholder="Phone"
-              type="number"
-              className="input"
-              value={formData.phone}
-              onChange={(e) => handleChange(e)}
-            />
-            <input
-              name="postCode"
-              placeholder="Post Code"
-              type="number"
-              className="input"
-              value={formData.postCode}
-              onChange={(e) => handleChange(e)}
-            />
-            <textarea
-              name="address"
-              placeholder="Address"
-              rows={4}
-              className="input"
-              value={formData.address}
-              onChange={(e) => handleChange(e)}
-            />
-            <label htmlFor="file" className="cursor input">
-              <div className="space-between align-center">
-                <p>{formData.attachment.name}</p>
-                <i className="fas fa-paperclip"></i>
-              </div>
-              <input
-                type="file"
-                name="attachment"
-                className="none"
-                id="file"
-                onChange={(e) => handleChange(e)}
-              />
-            </label>
-          </div>
-        </div>
-        <div className="shipping-width-right-con">
-          <div>
-            {carts
-              ? carts.map((product, index) => (
-                  <div className="mb-10">
-                    <CardProduct dataProduct={product} key={index} />
+      <Formik
+        initialValues={{
+          name: "",
+          address: "",
+          postCode: "",
+          phone: "",
+          email: "",
+        }}
+        validationSchema={transactionSchema}
+        onSubmit={(result) => onPay(result)}
+      >
+        {({ errors, touched }) => (
+          <Form className="space-between mb-51 mt-77">
+            <div>
+              <h2 className="shipping-page-title mb-20">Shipping</h2>
+              <div className="column">
+                {errors.name && touched.name && (
+                  <p className="text-validation">{errors.name}</p>
+                )}
+                <Field name="name" placeholder="Name" className="input" />
+                {errors.email && touched.email && (
+                  <p className="text-validation">{errors.email}</p>
+                )}
+                <Field
+                  name="email"
+                  placeholder="Email"
+                  type="email"
+                  className="input"
+                />
+                {errors.phone && touched.phone && (
+                  <p className="text-validation">{errors.phone}</p>
+                )}
+                <Field
+                  name="phone"
+                  placeholder="Phone"
+                  type="number"
+                  className="input"
+                />
+                {errors.postCode && touched.postCode && (
+                  <p className="text-validation">{errors.postCode}</p>
+                )}
+                <Field
+                  name="postCode"
+                  placeholder="Post Code"
+                  type="number"
+                  className="input"
+                />
+                {errors.address && touched.address && (
+                  <p className="text-validation">{errors.address}</p>
+                )}
+                <Field
+                  as="textarea"
+                  name="address"
+                  placeholder="Address"
+                  rows={4}
+                  className="input"
+                />
+                <label htmlFor="file" className="cursor input">
+                  <div className="space-between align-center">
+                    <p>
+                      {image && image !== null
+                        ? image.name
+                        : "Attache of transaction"}
+                    </p>
+                    <i className="fas fa-paperclip"></i>
                   </div>
-                ))
-              : null}
-          </div>
-          <div className="mt-28">
-            <button
-              className="btn btn-primary shipping-width-right-con"
-              onClick={onPay}
-            >
-              Pay
-            </button>
-          </div>
-        </div>
-      </form>
+                  <input
+                    type="file"
+                    name="attachment"
+                    className="none"
+                    id="file"
+                    onChange={(e) => setImage(e.target.files[0])}
+                  />
+                </label>
+              </div>
+            </div>
+            <div className="shipping-width-right-con">
+              <div>
+                {carts
+                  ? carts.map((product, index) => (
+                      <div className="mb-10">
+                        <CardProduct dataProduct={product} key={index} />
+                      </div>
+                    ))
+                  : null}
+              </div>
+              <div className="mt-28">
+                <button
+                  className="btn btn-primary shipping-width-right-con"
+                  type="submit"
+                >
+                  Pay
+                </button>
+              </div>
+            </div>
+          </Form>
+        )}
+      </Formik>
       <Modal show={showModal} setShow={setShowModal} custom={redirect}>
         <div className="p-modal">
           <p className="pop-up-succsess">

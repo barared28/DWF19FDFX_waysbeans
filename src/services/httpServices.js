@@ -1,4 +1,4 @@
-import { API, setAuthToken } from "../config/httpAxios";
+import { API, setAuthToken } from "../Config/httpAxios";
 
 // for image and static file
 export const baseURL = "http://localhost:5000/";

@@ -14,11 +14,11 @@ import NotFound from "./Pages/NotFoundPage";
 
 // import dll
 import Navbar from "./Components/Navbar/Navbar";
-import Loader from "./Components/Loader";
-import PrivateRoute from "./Components/PrivateRoot";
-import AdminRoute from "./Components/AdminRoot";
+import Loader from "./Components/Load/Loader";
+import PrivateRoute from "./Components/Rooter/PrivateRoot";
+import AdminRoute from "./Components/Rooter/AdminRoot";
 import { GlobalContext } from "./Context/GlobalContext";
-import { loadedService } from "./services/httpServices";
+import { loadedService } from "./Services/httpServices";
 import "./Style.scss";
 
 function App() {

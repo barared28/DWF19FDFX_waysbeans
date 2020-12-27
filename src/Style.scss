@@ -51,11 +51,20 @@ $font-default: "Poppins";
 .mt-11 {
   margin-top: 11px;
 }
+.mt-8 {
+  margin-top: 8px;
+}
 .mt-28 {
   margin-top: 28px;
 }
+.mt-20 {
+  margin-top: 20px;
+}
 .mt-26 {
   margin-top: 26px;
+}
+.mt-35 {
+  margin-top: 35px;
 }
 .mt-44 {
   margin-top: 44px;
@@ -300,7 +309,7 @@ $font-default: "Poppins";
 }
 .wave-hero {
   position: absolute;
-  bottom: 130px;
+  bottom: 165px;
   left: 719px;
   width: 352px;
   height: 159px;
@@ -440,8 +449,12 @@ $font-default: "Poppins";
   line-height: 25px;
   color: $primary;
   padding: 13px 10px;
-  margin-top: 20px;
+  margin-bottom: 20px;
   width: 472px;
+}
+.input-photo {
+  background: rgba(97, 61, 43, 0.25);
+  padding: 10px;
 }
 .shipping-width-right-con {
   width: 424px;
@@ -864,4 +877,11 @@ th {
 .text-not-found {
   color: $primary;
   font-size: 5rem;
+}
+
+// text danger validation
+.text-validation {
+  color: #f13f3f;
+  font-weight: 800;
+  margin-left: 5px;
 }

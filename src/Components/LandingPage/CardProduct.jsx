@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import format from "../../config/formatingCurency";
-import { baseURL } from "../../services/httpServices";
+import format from "../../Config/formatingCurency";
+import { baseURL } from "../../Services/httpServices";
 
 function CardProduct({ product }) {
   return (

@@ -4,11 +4,11 @@ import {
   getMyTransactions,
   editStatusTransactionService,
   loadedService,
-} from "../services/httpServices";
+} from "../Services/httpServices";
 import user from "../Images/user.png";
-import CardProduct from "../Components/ProductBox";
+import CardProduct from "../Components/Mikro/ProductBox";
 import qrode from "../Images/qr-code.png";
-import Loader from "../Components/Loader";
+import Loader from "../Components/Load/Loader";
 
 function ProfilePage() {
   const [state, dispatch] = useContext(GlobalContext);
