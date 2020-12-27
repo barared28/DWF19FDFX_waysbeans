@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "../../Context/GlobalContext";
-import { logoutService } from "../../Services/httpServices";
+import { logoutService } from "../../services/httpServices";
 import logo from "../../Images/Icon.png";
 import cart from "../../Images/cart.png";
 import user from "../../Images/user.png";

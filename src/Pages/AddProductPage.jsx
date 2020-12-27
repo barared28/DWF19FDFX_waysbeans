@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { addProductService } from "../Services/httpServices";
+import { addProductService } from "../services/httpServices";
 import Modal from "../Components/Mikro/Modal";
 import UploadLoader from "../Components/Load/UploadLoader";
 

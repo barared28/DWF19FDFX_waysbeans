@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { loginService } from "../../Services/httpServices";
+import { loginService } from "../../services/httpServices";
 import Modal from "../Mikro/Modal";
 import Popup from "../Mikro/Popup";
 

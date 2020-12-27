@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import format from "../../Config/formatingCurency";
+import format from "../../config/formatingCurency";
 
 function CardProduct({ product }) {
   return (

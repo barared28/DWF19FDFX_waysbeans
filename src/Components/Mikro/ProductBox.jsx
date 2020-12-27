@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import format from "../../Config/formatingCurency";
+import format from "../../config/formatingCurency";
 import logo from "../../Images/Icon.png";
-import { getProductByIdService } from "../../Services/httpServices";
+import { getProductByIdService } from "../../services/httpServices";
 
 function ProductBox({ children, dataProduct, ready = false }) {
   const [product, setProducts] = useState(null);

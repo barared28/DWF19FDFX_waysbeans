@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { editStatusTransactionService } from "../../Services/httpServices";
+import { editStatusTransactionService } from "../../services/httpServices";
 
 function Table({ data, dispatch }) {
   return (

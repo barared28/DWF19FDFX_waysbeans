@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../Context/GlobalContext";
 import { Link } from "react-router-dom";
-import { getProductByIdService } from "../Services/httpServices";
+import { getProductByIdService } from "../services/httpServices";
 import Loader from "../Components/Load/Loader";
-import format from "../Config/formatingCurency";
+import format from "../config/formatingCurency";
 import trash from "../Images/trash.png";
 
 function CartPage() {

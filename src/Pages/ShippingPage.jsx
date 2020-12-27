@@ -3,7 +3,7 @@ import { GlobalContext } from "../Context/GlobalContext";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { addTransactionService } from "../Services/httpServices";
+import { addTransactionService } from "../services/httpServices";
 import CardProduct from "../Components/Mikro/ProductBox";
 import UploadLoader from "../Components/Load/UploadLoader";
 import Modal from "../Components/Mikro/Modal";

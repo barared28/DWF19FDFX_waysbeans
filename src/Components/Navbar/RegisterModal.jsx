@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { registerService } from "../../Services/httpServices";
+import { registerService } from "../../services/httpServices";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Modal from "../Mikro/Modal";

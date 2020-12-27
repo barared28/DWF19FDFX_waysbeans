@@ -1,12 +1,12 @@
 import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../Context/GlobalContext";
 import { useParams } from "react-router-dom";
-import { getProductByIdService, baseURL } from "../Services/httpServices";
+import { getProductByIdService, baseURL } from "../services/httpServices";
 import PageNotFound from "../Pages/NotFoundPage";
 import LoginModal from "../Components/Navbar/LoginModal";
 import RegisterModal from "../Components/Navbar/RegisterModal";
 import Popup from "../Components/Mikro/Popup";
-import format from "../Config/formatingCurency";
+import format from "../config/formatingCurency";
 import Loader from "../Components/Load/Loader";
 
 function ProductDetailPage() {

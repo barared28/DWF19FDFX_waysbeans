@@ -4,7 +4,7 @@ import {
   getMyTransactions,
   editStatusTransactionService,
   loadedService,
-} from "../Services/httpServices";
+} from "../services/httpServices";
 import user from "../Images/user.png";
 import CardProduct from "../Components/Mikro/ProductBox";
 import qrode from "../Images/qr-code.png";

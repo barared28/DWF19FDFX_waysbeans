@@ -1,4 +1,4 @@
-import { API, setAuthToken } from "../Config/httpAxios";
+import { API, setAuthToken } from "../config/httpAxios";
 
 export const loginService = async (dispatch, body, cbFailed, cbSuccess) => {
   try {
