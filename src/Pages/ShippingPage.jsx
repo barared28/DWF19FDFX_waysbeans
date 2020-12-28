@@ -46,7 +46,7 @@ function Shipping() {
       dispatch({
         type: "RESET_CART",
       });
-      setLoading(true);
+      setLoading(false);
       setShowModal(true);
     });
   };
